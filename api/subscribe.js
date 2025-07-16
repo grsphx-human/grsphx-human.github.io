@@ -1,14 +1,21 @@
 // This is a Node.js serverless function
 // It uses the GitHub API to append an email to a file in your repository.
 
-// We use the 'node-fetch' package to make HTTP requests to the GitHub API.
-// You'll need to add "node-fetch": "^2.6.7" to your package.json dependencies.
-// If you don't have a package.json, run `npm init -y` in your project root.
-// Then run `npm install node-fetch@2`.
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
-    // Only allow POST requests
+    // Set CORS headers to allow requests from any origin
+    // This is important for handling pre-flight OPTIONS requests
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle the pre-flight OPTIONS request
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
+    // Only allow POST requests for the main logic
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST');
         return res.status(405).end('Method Not Allowed');
