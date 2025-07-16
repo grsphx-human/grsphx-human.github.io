@@ -36,6 +36,28 @@
         #mobile-menu {
             transition: opacity 0.2s ease-out, transform 0.2s ease-out;
         }
+
+        /* Styles for the animated hamburger menu icon */
+        .hamburger-top,
+        .hamburger-bottom {
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #374151; /* gray-700 */
+            transition: all 0.3s ease-in-out;
+        }
+        .hamburger-top {
+            transform: translateY(-5px);
+        }
+        .hamburger-bottom {
+            transform: translateY(5px);
+        }
+        #menu-btn.open .hamburger-top {
+            transform: rotate(135deg);
+        }
+        #menu-btn.open .hamburger-bottom {
+            transform: rotate(-135deg);
+        }
     </style>
 </head>
 <body id="top" class="bg-gray-50 text-gray-800">
@@ -58,10 +80,9 @@
             
             <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="menu-btn" type="button" class="text-gray-600 hover:text-[var(--primary-color)] focus:outline-none focus:text-[var(--primary-color)]">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
+                <button id="menu-btn" type="button" class="relative w-8 h-8 flex justify-center items-center focus:outline-none">
+                    <span class="hamburger-top"></span>
+                    <span class="hamburger-bottom"></span>
                 </button>
             </div>
 
@@ -172,6 +193,7 @@
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const toggleMenu = () => {
+            menuBtn.classList.toggle('open');
             const isHidden = mobileMenu.classList.contains('hidden');
             if (isHidden) {
                 mobileMenu.classList.remove('hidden');
