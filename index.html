@@ -12,8 +12,6 @@
         /* =====================================================================
         Theme Color Variables
         =====================================================================
-        You can easily change the site's theme by modifying the color 
-        values below.
         */
         :root {
             --primary-color: #D98236; /* Muted Orange for main buttons */
@@ -30,6 +28,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
+            /* Add padding to the top of the body to prevent content from being hidden by the fixed header */
+            padding-top: 80px; 
         }
 
         /* Styles for the smooth dropdown transition */
@@ -58,13 +58,19 @@
         #menu-btn.open .hamburger-bottom {
             transform: rotate(-135deg);
         }
+
+        /* Style for the white bubble around the menu button */
+        #menu-btn.bubble {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
     </style>
 </head>
 <body id="top" class="bg-gray-50 text-gray-800">
 
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center relative">
+    <header id="main-header" class="bg-white fixed top-0 w-full z-30 transition-transform duration-300 ease-in-out">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo and Site Name -->
             <a href="#top" class="flex items-center space-x-3">
                 <img src="logo.png" alt="HumanKind Logo" class="h-6 w-6">
@@ -77,26 +83,30 @@
                 <a href="#subscribe" class="text-gray-600 hover:text-[var(--primary-color)]">Subscribe</a>
             </nav>
             <a href="#subscribe" class="hidden md:block bg-[var(--primary-color)] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[var(--primary-hover-color)] transition duration-300">Get Notified</a>
-            
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button id="menu-btn" type="button" class="relative w-8 h-8 flex justify-center items-center focus:outline-none">
-                    <span class="hamburger-top"></span>
-                    <span class="hamburger-bottom"></span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 p-2 md:hidden origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
-                <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
-                <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
-                <a href="#subscribe" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
-            </div>
         </div>
     </header>
 
+    <!-- Mobile Menu Button & Panel Container -->
+    <div class="md:hidden">
+        <!-- The button itself, always visible on mobile -->
+        <button id="menu-btn" type="button" class="fixed top-4 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
+            <div class="relative w-6 h-6">
+                <span class="hamburger-top"></span>
+                <span class="hamburger-bottom"></span>
+            </div>
+        </button>
+
+        <!-- The menu panel that appears -->
+        <div id="mobile-menu" class="hidden fixed top-20 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
+            <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
+            <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
+            <a href="#subscribe" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
+        </div>
+    </div>
+
+
     <!-- Hero Section -->
-    <main class="container mx-auto px-6 pt-24 pb-16 text-center flex flex-col min-h-[90vh]">
+    <main class="container mx-auto px-6 pt-16 pb-16 text-center flex flex-col min-h-[calc(90vh-80px)]">
         <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">When you focus on the good, the good gets better.</h1>
         <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">HumanKind is a mobile app that fosters gratitude and emotionally healthy relationships through daily, personalized messages and a culture-forward rewards system.</p>
         <div class="mt-8">
@@ -189,9 +199,10 @@
     </footer>
 
     <script>
-        // --- Mobile Menu Logic ---
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mainHeader = document.getElementById('main-header');
+
         const toggleMenu = () => {
             menuBtn.classList.toggle('open');
             const isHidden = mobileMenu.classList.contains('hidden');
@@ -204,6 +215,25 @@
                 setTimeout(() => { mobileMenu.classList.add('hidden'); }, 200);
             }
         };
+
+        // --- Hide Header on Scroll Logic ---
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scroll Down
+                mainHeader.classList.add('-translate-y-full');
+                if (window.innerWidth < 768) { // Only show bubble on mobile
+                    menuBtn.classList.add('bubble');
+                }
+            } else {
+                // Scroll Up
+                mainHeader.classList.remove('-translate-y-full');
+                menuBtn.classList.remove('bubble');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
         mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
         window.addEventListener('click', (e) => { if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) { toggleMenu(); } });
@@ -224,52 +254,38 @@
             
             if (!email) return;
 
-            // Disable form and show loading state
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
 
             try {
-                // Send the email to our serverless function
                 const response = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email }),
                 });
-
                 const result = await response.json();
-
                 if (response.ok) {
-                    // Success
                     statusMessage.textContent = "Thank you for subscribing! We're excited to have you.";
-                    addAnotherEmailBtn.classList.remove('hidden');
                 } else {
-                    // Handle errors from the server
                     statusMessage.textContent = result.message || 'An error occurred. Please try again.';
-                    addAnotherEmailBtn.classList.remove('hidden');
                 }
             } catch (error) {
-                // Handle network errors
                 console.error('Submission error:', error);
                 statusMessage.textContent = 'Could not connect. Please check your network and try again.';
-                addAnotherEmailBtn.classList.remove('hidden');
             } finally {
-                // Show the message and hide the form
+                addAnotherEmailBtn.classList.remove('hidden');
                 formContainer.classList.add('hidden');
                 subscribePrompt.classList.add('hidden');
                 messageContainer.classList.remove('hidden');
             }
         });
 
-        // Handle "Add another Email" button click
         addAnotherEmailBtn.addEventListener('click', function() {
-            // Reset to initial state
             messageContainer.classList.add('hidden');
             addAnotherEmailBtn.classList.add('hidden');
             statusMessage.textContent = '';
-            
             formContainer.classList.remove('hidden');
             subscribePrompt.classList.remove('hidden');
-            
             emailInput.value = '';
             submitBtn.disabled = false;
             submitBtn.textContent = 'Notify Me';
