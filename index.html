@@ -7,33 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* =====================================================================
-        Theme Color Variables
-        =====================================================================
-        You can easily change the site's theme by modifying the color 
-        values below.
-        */
         :root {
-            --primary-color: #D98236; /* Muted Orange for main buttons */
-            --primary-hover-color: #D95E32; /* Brighter Custom Orange for hover */
-            --primary-dark-bg: #D94004; /* Darkest Orange for subscription section bg */
-            --primary-light-bg: #A69856; /* Earthy Gold for feature icon backgrounds */
-            --primary-light-text: #F0EAD6; /* Light Beige for text on dark bg */
-            --primary-ring-color: #FDBA74; /* Light Orange for focus ring */
+            --primary-color: #D98236;
+            --primary-hover-color: #D95E32;
+            --primary-dark-bg: #D94004;
+            --primary-light-bg: #A69856;
+            --primary-light-text: #F0EAD6;
+            --primary-ring-color: #FDBA74;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Styles for the smooth dropdown transition */
-        #mobile-menu {
-            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        #mobile-menu { transition: opacity 0.2s ease-out, transform 0.2s ease-out; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -42,24 +26,17 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center relative">
             <div class="text-2xl font-bold text-gray-900">Human Kind</div>
-            <!-- Desktop Menu -->
             <nav class="hidden md:flex space-x-8">
                 <a href="#features" class="text-gray-600 hover:text-[var(--primary-color)]">Features</a>
                 <a href="#how-it-works" class="text-gray-600 hover:text-[var(--primary-color)]">How It Works</a>
                 <a href="#subscribe" class="text-gray-600 hover:text-[var(--primary-color)]">Subscribe</a>
             </nav>
             <a href="#subscribe" class="hidden md:block bg-[var(--primary-color)] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[var(--primary-hover-color)] transition duration-300">Get Notified</a>
-            
-            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="menu-btn" type="button" class="text-gray-600 hover:text-[var(--primary-color)] focus:outline-none focus:text-[var(--primary-color)]">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
-
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden absolute top-full right-0 mt-2 p-2 md:hidden origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
                 <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
                 <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
@@ -82,7 +59,6 @@
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Why You'll Love Human Kind</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <!-- Feature 1 -->
                 <div class="text-center">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
@@ -90,7 +66,6 @@
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">Daily Gratitude Practice</h3>
                     <p class="text-gray-600">Make thankfulness a daily ritual. Our app gently reminds you to send three messages of gratitude, making it easy to build a positive habit.</p>
                 </div>
-                <!-- Feature 2 -->
                 <div class="text-center">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -98,7 +73,6 @@
                     <h3 class="text-xl font-semibold text-gray-900 mb-2">Meaningful Connections</h3>
                     <p class="text-gray-600">Strengthen your relationships by regularly expressing why you're grateful for the people in your life. A small message can make a big impact.</p>
                 </div>
-                <!-- Feature 3 -->
                 <div class="text-center">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -114,21 +88,18 @@
     <section id="how-it-works" class="py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Start Sharing Gratitude in 3 Simple Steps</h2>
-            <div class="flex flex-col md:flex-row justify-center items-start md:items-center space-y-8 md:space-y-0 md:space-x-12">
-                 <!-- Step 1 -->
-                <div class="flex items-center">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mr-4 flex-shrink-0">1</div>
-                    <p class="text-lg text-gray-700">Join the Waitlist</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
+                    <p class="text-lg text-gray-700 font-semibold">Join the Waitlist</p>
                 </div>
-                 <!-- Step 2 -->
-                 <div class="flex items-center">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mr-4 flex-shrink-0">2</div>
-                    <p class="text-lg text-gray-700">Receive Your Early Access Invite</p>
+                <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">2</div>
+                    <p class="text-lg text-gray-700 font-semibold">Receive Your Early Access Invite</p>
                 </div>
-                 <!-- Step 3 -->
-                 <div class="flex items-center">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mr-4 flex-shrink-0">3</div>
-                    <p class="text-lg text-gray-700">Start Spreading Kindness</p>
+                <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">3</div>
+                    <p class="text-lg text-gray-700 font-semibold">Start Spreading Kindness</p>
                 </div>
             </div>
         </div>
@@ -138,16 +109,18 @@
     <section id="subscribe" class="bg-[var(--primary-dark-bg)] py-20">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold text-white mb-4">Join a Community of Kindness</h2>
-            <p class="text-[var(--primary-light-text)] text-lg mb-8 max-w-2xl mx-auto">Be the first to know when Human Kind launches. Join our mailing list for updates and to become part of a movement to make the world a more grateful place.</p>
-            <form id="subscribeForm" class="max-w-md mx-auto">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <input type="email" id="emailInput" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--primary-ring-color)]" required>
-                    <button type="submit" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Notify Me</button>
-                </div>
-            </form>
-            <div id="successContainer" class="hidden">
-                <p id="successMessage" class="text-[var(--primary-light-text)] text-lg mb-4">Thank you for subscribing! We're excited to have you.</p>
-                <button id="addAnotherEmailBtn" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Add another Email</button>
+            <p id="subscribe-prompt" class="text-[var(--primary-light-text)] text-lg mb-8 max-w-2xl mx-auto">Be the first to know when Human Kind launches. Join our mailing list for updates and to become part of a movement to make the world a more grateful place.</p>
+            <div id="form-container">
+                <form id="subscribeForm" class="max-w-md mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" id="emailInput" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--primary-ring-color)]" required>
+                        <button type="submit" id="submitBtn" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Notify Me</button>
+                    </div>
+                </form>
+            </div>
+            <div id="messageContainer" class="hidden">
+                 <p id="statusMessage" class="text-[var(--primary-light-text)] text-lg mb-4"></p>
+                 <button id="addAnotherEmailBtn" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300 hidden">Add another Email</button>
             </div>
         </div>
     </section>
@@ -160,73 +133,89 @@
     </footer>
 
     <script>
-        // Handle subscription form submission
+        // --- Mobile Menu Logic ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const toggleMenu = () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => { mobileMenu.classList.remove('opacity-0', 'scale-95'); mobileMenu.classList.add('opacity-100', 'scale-100'); }, 10);
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'scale-100');
+                mobileMenu.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => { mobileMenu.classList.add('hidden'); }, 200);
+            }
+        };
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+        mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
+        window.addEventListener('click', (e) => { if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) { toggleMenu(); } });
+
+        // --- Subscription Form Logic ---
         const subscribeForm = document.getElementById('subscribeForm');
         const emailInput = document.getElementById('emailInput');
-        const successContainer = document.getElementById('successContainer');
+        const submitBtn = document.getElementById('submitBtn');
+        const formContainer = document.getElementById('form-container');
+        const messageContainer = document.getElementById('messageContainer');
+        const statusMessage = document.getElementById('statusMessage');
         const addAnotherEmailBtn = document.getElementById('addAnotherEmailBtn');
+        const subscribePrompt = document.getElementById('subscribe-prompt');
 
-        subscribeForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
+        subscribeForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
             const email = emailInput.value;
+            
+            if (!email) return;
 
-            if (email) {
-                // Here you would typically send the email to your backend or a service like Mailchimp.
-                console.log('Email submitted:', email);
-                
-                subscribeForm.style.display = 'none';
-                successContainer.classList.remove('hidden');
+            // Disable form and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                // Send the email to our serverless function
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Success
+                    statusMessage.textContent = "Thank you for subscribing! We're excited to have you.";
+                    addAnotherEmailBtn.classList.remove('hidden');
+                } else {
+                    // Handle errors from the server
+                    statusMessage.textContent = result.message || 'An error occurred. Please try again.';
+                    addAnotherEmailBtn.classList.remove('hidden');
+                }
+            } catch (error) {
+                // Handle network errors
+                console.error('Submission error:', error);
+                statusMessage.textContent = 'Could not connect. Please check your network and try again.';
+                addAnotherEmailBtn.classList.remove('hidden');
+            } finally {
+                // Show the message and hide the form
+                formContainer.classList.add('hidden');
+                subscribePrompt.classList.add('hidden');
+                messageContainer.classList.remove('hidden');
             }
         });
 
         // Handle "Add another Email" button click
         addAnotherEmailBtn.addEventListener('click', function() {
-            successContainer.classList.add('hidden');
-            subscribeForm.style.display = 'block';
-            emailInput.value = ''; // Clear the input field
-        });
-
-        // Mobile menu toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        const toggleMenu = () => {
-            const isHidden = mobileMenu.classList.contains('hidden');
-            if (isHidden) {
-                mobileMenu.classList.remove('hidden');
-                // Use a timeout to allow the element to be rendered before adding transition classes
-                setTimeout(() => {
-                    mobileMenu.classList.remove('opacity-0', 'scale-95');
-                    mobileMenu.classList.add('opacity-100', 'scale-100');
-                }, 10);
-            } else {
-                mobileMenu.classList.remove('opacity-100', 'scale-100');
-                mobileMenu.classList.add('opacity-0', 'scale-95');
-                // Use a timeout to hide the element after the transition completes
-                setTimeout(() => {
-                    mobileMenu.classList.add('hidden');
-                }, 200); // This should match the transition duration
-            }
-        };
-
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        // Close menu when a link is clicked
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                toggleMenu();
-            }
-        });
-
-        // Close menu when clicking outside
-        window.addEventListener('click', (e) => {
-            if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-                toggleMenu();
-            }
+            // Reset to initial state
+            messageContainer.classList.add('hidden');
+            addAnotherEmailBtn.classList.add('hidden');
+            statusMessage.textContent = '';
+            
+            formContainer.classList.remove('hidden');
+            subscribePrompt.classList.remove('hidden');
+            
+            emailInput.value = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Notify Me';
         });
     </script>
 
