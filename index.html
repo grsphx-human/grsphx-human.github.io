@@ -73,7 +73,7 @@
 
     <!-- Header -->
     <header id="main-header" class="bg-white fixed top-0 w-full z-30 transition-transform duration-300 ease-in-out">
-        <div class="px-6 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <!-- Logo and Site Name -->
             <a href="#top" class="flex items-center space-x-3">
                 <img src="logo.png" alt="HumanKind Logo" class="h-6 w-6">
@@ -89,28 +89,25 @@
         </div>
     </header>
 
-    <!-- Mobile Menu Button & Panel Container -->
-    <div class="md:hidden">
-        <!-- The button itself, always visible on mobile -->
-        <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
-            <div class="relative w-6 h-6">
-                <span class="hamburger-top"></span>
-                <span class="hamburger-bottom"></span>
-            </div>
-        </button>
-
-        <!-- The menu panel that appears -->
-        <div id="mobile-menu" class="hidden fixed top-20 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
-            <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
-            <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
-            <a href="#subscribe" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
+    <!-- Floating Menu Button & Panel Container -->
+    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300 opacity-0 pointer-events-none">
+        <div class="relative w-6 h-6">
+            <span class="hamburger-top"></span>
+            <span class="hamburger-bottom"></span>
         </div>
+    </button>
+
+    <!-- The menu panel that appears -->
+    <div id="mobile-menu" class="hidden fixed top-20 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
+        <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
+        <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
+        <a href="#subscribe" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
     </div>
 
 
     <!-- Hero Section -->
     <main class="w-full flex flex-col min-h-[calc(90vh-80px)] pt-16 pb-16">
-        <div class="px-6 text-center">
+        <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">When you focus on the good, the good gets better.</h1>
             <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">HumanKind is a mobile app that fosters gratitude and emotionally healthy relationships through daily, personalized messages and a culture-forward rewards system.</p>
             <div class="mt-8">
@@ -121,7 +118,7 @@
 
     <!-- Features Section -->
     <section id="features" class="bg-white py-20">
-        <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Why You'll Love HumanKind</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Feature 1 -->
@@ -154,9 +151,9 @@
 
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-20">
-        <div class="px-6">
+        <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Start Sharing Gratitude in 3 Simple Steps</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                  <!-- Step 1 -->
                 <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
@@ -223,21 +220,37 @@
 
         // --- Hide Header on Scroll Logic ---
         let lastScrollTop = 0;
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const handleScrollAndResize = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // --- Header Visibility ---
             if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scroll Down
                 mainHeader.classList.add('-translate-y-full');
-                if (window.innerWidth < 768) { // Only show bubble on mobile
-                    menuBtn.classList.add('bubble');
-                }
             } else {
-                // Scroll Up
                 mainHeader.classList.remove('-translate-y-full');
-                menuBtn.classList.remove('bubble');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        });
+
+            // --- Button Visibility & Style ---
+            const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
+
+            if (isHeaderHidden) {
+                menuBtn.classList.remove('opacity-0', 'pointer-events-none');
+                menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+            } else {
+                menuBtn.classList.add('opacity-0', 'pointer-events-none');
+                menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
+                // Also close the menu if the header becomes visible and the menu is open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScrollAndResize);
+        window.addEventListener('resize', handleScrollAndResize);
+        document.addEventListener('DOMContentLoaded', handleScrollAndResize);
+
 
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
         mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
