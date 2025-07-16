@@ -90,7 +90,7 @@
     </header>
 
     <!-- Floating Menu Button & Panel Container -->
-    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300 opacity-0 pointer-events-none">
+    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
         <div class="relative w-6 h-6">
             <span class="hamburger-top"></span>
             <span class="hamburger-bottom"></span>
@@ -222,6 +222,7 @@
         let lastScrollTop = 0;
         const handleScrollAndResize = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const isDesktop = window.innerWidth >= 768;
 
             // --- Header Visibility ---
             if (scrollTop > lastScrollTop && scrollTop > 100) {
@@ -234,15 +235,27 @@
             // --- Button Visibility & Style ---
             const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
 
-            if (isHeaderHidden) {
-                menuBtn.classList.remove('opacity-0', 'pointer-events-none');
-                menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+            if (isDesktop) {
+                // Desktop logic: button appears only when header is hidden
+                if (isHeaderHidden) {
+                    menuBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+                } else {
+                    menuBtn.classList.add('opacity-0', 'pointer-events-none');
+                    menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
+                    // Also close the menu if the header becomes visible and the menu is open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMenu();
+                    }
+                }
             } else {
-                menuBtn.classList.add('opacity-0', 'pointer-events-none');
-                menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
-                // Also close the menu if the header becomes visible and the menu is open
-                if (!mobileMenu.classList.contains('hidden')) {
-                    toggleMenu();
+                // Mobile logic: button is always visible
+                menuBtn.classList.remove('opacity-0', 'pointer-events-none');
+                menuBtn.classList.add('opacity-100', 'pointer-events-auto');
+                if (isHeaderHidden) {
+                    menuBtn.classList.add('bubble');
+                } else {
+                    menuBtn.classList.remove('bubble');
                 }
             }
         };
