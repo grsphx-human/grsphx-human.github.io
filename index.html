@@ -89,6 +89,15 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Mobile-only scroll fade animation */
+        .step-item {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .step-item.faded-out {
+            opacity: 0.2;
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body id="top">
@@ -171,15 +180,15 @@
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Start Sharing Gratitude in 3 Simple Steps</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
                     <p class="text-lg font-semibold">Join the Waitlist</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">2</div>
                     <p class="text-lg font-semibold">Receive Your Early Access Invite</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">3</div>
                     <p class="text-lg font-semibold">Start Spreading Kindness</p>
                 </div>
@@ -340,6 +349,58 @@
         targets.forEach(target => {
             observer.observe(target);
         });
+        
+        // Mobile-only scroll fade animation for "How it Works" section
+        const steps = document.querySelectorAll('.step-item');
+        const handleStepScroll = () => {
+            if (window.innerWidth < 768) { // Only run on mobile
+                const viewportCenter = window.innerHeight / 2;
+                let closestStep = null;
+                let minDistance = Infinity;
+
+                steps.forEach(step => {
+                    const rect = step.getBoundingClientRect();
+                    const stepCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(viewportCenter - stepCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestStep = step;
+                    }
+                });
+
+                steps.forEach(step => {
+                    if (step === closestStep) {
+                        step.classList.remove('faded-out');
+                    } else {
+                        step.classList.add('faded-out');
+                    }
+                });
+            } else {
+                // On desktop, ensure all steps are visible
+                steps.forEach(step => {
+                    step.classList.remove('faded-out');
+                });
+            }
+        };
+
+        const howItWorksSection = document.getElementById('how-it-works');
+        const stepObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    window.addEventListener('scroll', handleStepScroll);
+                    handleStepScroll(); // Initial check
+                } else {
+                    window.removeEventListener('scroll', handleStepScroll);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        if (howItWorksSection) {
+            stepObserver.observe(howItWorksSection);
+        }
+        window.addEventListener('resize', handleStepScroll);
+
     </script>
 </body>
 </html>
