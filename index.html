@@ -235,27 +235,48 @@
         let lastScrollTop = 0;
         const handleScrollAndResize = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const isDesktop = window.innerWidth >= 768;
+
+            // --- Header Visibility ---
             if (scrollTop > lastScrollTop && scrollTop > 100) {
                 mainHeader.classList.add('-translate-y-full');
             } else {
                 mainHeader.classList.remove('-translate-y-full');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+            // --- Button Visibility & Style ---
             const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
-            if (isHeaderHidden) {
-                menuBtn.classList.remove('opacity-0', 'pointer-events-none');
-                menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+
+            if (isDesktop) {
+                if (isHeaderHidden) {
+                    menuBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+                } else {
+                    menuBtn.classList.add('opacity-0', 'pointer-events-none');
+                    menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        toggleMenu();
+                    }
+                }
             } else {
-                menuBtn.classList.add('opacity-0', 'pointer-events-none');
-                menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
-                if (!mobileMenu.classList.contains('hidden')) {
-                    toggleMenu();
+                // On mobile, the button is always visible and interactive
+                menuBtn.classList.remove('opacity-0', 'pointer-events-none');
+                menuBtn.classList.add('opacity-100', 'pointer-events-auto');
+
+                // The bubble effect only appears when the header is hidden
+                if (isHeaderHidden) {
+                    menuBtn.classList.add('bubble');
+                } else {
+                    menuBtn.classList.remove('bubble');
                 }
             }
         };
+
         window.addEventListener('scroll', handleScrollAndResize);
         window.addEventListener('resize', handleScrollAndResize);
         document.addEventListener('DOMContentLoaded', handleScrollAndResize);
+
 
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
         mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
@@ -327,3 +348,4 @@
     </script>
 </body>
 </html>
+
