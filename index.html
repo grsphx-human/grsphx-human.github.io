@@ -109,7 +109,7 @@
     </header>
 
     <!-- Floating Menu Button & Panel Container -->
-    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
+    <button id="menu-btn" type="button" class="fixed top-4 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
         <div class="relative w-6 h-6">
             <span class="hamburger-top"></span>
             <span class="hamburger-bottom"></span>
@@ -122,7 +122,7 @@
     </div>
 
     <!-- Hero Section -->
-    <main class="w-full flex flex-col justify-center min-h-[calc(100vh-80px)] pt-16 pb-16">
+    <main class="w-full flex flex-col justify-center pt-24 pb-24">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
                 When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
@@ -237,7 +237,6 @@
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const isDesktop = window.innerWidth >= 768;
 
-            // --- Header Visibility ---
             if (scrollTop > lastScrollTop && scrollTop > 100) {
                 mainHeader.classList.add('-translate-y-full');
             } else {
@@ -245,7 +244,6 @@
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 
-            // --- Button Visibility & Style ---
             const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
 
             if (isDesktop) {
@@ -260,11 +258,9 @@
                     }
                 }
             } else {
-                // On mobile, the button is always visible and interactive
                 menuBtn.classList.remove('opacity-0', 'pointer-events-none');
                 menuBtn.classList.add('opacity-100', 'pointer-events-auto');
 
-                // The bubble effect only appears when the header is hidden
                 if (isHeaderHidden) {
                     menuBtn.classList.add('bubble');
                 } else {
@@ -331,7 +327,6 @@
             submitBtn.textContent = 'Notify Me';
         });
 
-        // Scroll Animation Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
