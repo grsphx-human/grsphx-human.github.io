@@ -32,12 +32,12 @@
             font-family: 'Sora', sans-serif;
             background-color: #F9FAFB; /* gray-50 */
             color: #1F2937; /* gray-800 */
-            padding-top: 80px; 
+            padding-top: 64px; 
         }
 
         /* Add scroll margin to sections to offset the fixed header */
         section {
-            scroll-margin-top: 80px;
+            scroll-margin-top: 64px;
         }
 
         /* Gradient Text */
@@ -118,20 +118,20 @@
     </header>
 
     <!-- Floating Menu Button & Panel Container -->
-    <button id="menu-btn" type="button" class="fixed top-4 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
+    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
         <div class="relative w-6 h-6">
             <span class="hamburger-top"></span>
             <span class="hamburger-bottom"></span>
         </div>
     </button>
-    <div id="mobile-menu" class="hidden fixed top-20 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
+    <div id="mobile-menu" class="hidden fixed top-16 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
         <a href="#features" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
         <a href="#how-it-works" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
         <a href="#subscribe" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
     </div>
 
     <!-- Hero Section -->
-    <main class="w-full flex flex-col justify-center min-h-[calc(100vh-80px)] py-16">
+    <main class="w-full flex flex-col justify-center min-h-[calc(100vh-64px)] py-16">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
                 When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
