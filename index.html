@@ -7,10 +7,12 @@
     <!-- Favicon Link -->
     <link rel="icon" type="image/png" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* =====================================================================
-        Theme Color Variables
+        Theme & Font Configuration
         =====================================================================
         */
         :root {
@@ -27,14 +29,32 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            /* Add padding to the top of the body to prevent content from being hidden by the fixed header */
+            font-family: 'Sora', sans-serif;
+            background-color: #F9FAFB; /* gray-50 */
+            color: #1F2937; /* gray-800 */
             padding-top: 80px; 
         }
 
-        /* Styles for the smooth dropdown transition */
-        #mobile-menu {
-            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        /* Add scroll margin to sections to offset the fixed header */
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modern Button Style */
+        .modern-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
+            transition: all 0.3s ease;
+        }
+        .modern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--primary-color);
         }
 
         /* Styles for the animated hamburger menu icon */
@@ -43,106 +63,103 @@
             position: absolute;
             top: 50%;
             left: 0;
-            margin-top: -1px; /* Offset by half the bar's height for perfect centering */
+            margin-top: -1px;
             width: 24px;
             height: 2px;
-            background-color: #374151; /* gray-700 */
+            background-color: #1F2937; /* gray-800 */
             transition: all 0.3s ease-in-out;
         }
-        .hamburger-top {
-            transform: translateY(-5px);
-        }
-        .hamburger-bottom {
-            transform: translateY(5px);
-        }
-        #menu-btn.open .hamburger-top {
-            transform: rotate(135deg);
-        }
-        #menu-btn.open .hamburger-bottom {
-            transform: rotate(-135deg);
+        .hamburger-top { transform: translateY(-5px); }
+        .hamburger-bottom { transform: translateY(5px); }
+        #menu-btn.open .hamburger-top { transform: rotate(135deg); }
+        #menu-btn.open .hamburger-bottom { transform: rotate(-135deg); }
+        #menu-btn.bubble {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
-        /* Style for the white bubble around the menu button */
-        #menu-btn.bubble {
-            background-color: white;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        /* Scroll Animation Styles */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body id="top" class="bg-gray-50 text-gray-800">
+<body id="top">
 
     <!-- Header -->
-    <header id="main-header" class="bg-white fixed top-0 w-full z-30 transition-transform duration-300 ease-in-out">
+    <header id="main-header" class="bg-white/80 backdrop-blur-sm fixed top-0 w-full z-30 transition-transform duration-300 ease-in-out">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo and Site Name -->
             <a href="#top" class="flex items-center space-x-3">
                 <img src="logo.png" alt="HumanKind Logo" class="h-6 w-6">
-                <span class="text-2xl font-bold text-gray-900">HumanKind</span>
+                <span class="text-2xl font-bold">HumanKind</span>
             </a>
-            <!-- Desktop Menu -->
             <nav class="hidden md:flex space-x-8">
-                <a href="#features" class="text-gray-600 hover:text-[var(--primary-color)]">Features</a>
-                <a href="#how-it-works" class="text-gray-600 hover:text-[var(--primary-color)]">How It Works</a>
-                <a href="#subscribe" class="text-gray-600 hover:text-[var(--primary-color)]">Subscribe</a>
+                <a href="#features" class="hover:text-[var(--primary-color)] transition-colors">Features</a>
+                <a href="#how-it-works" class="hover:text-[var(--primary-color)] transition-colors">How It Works</a>
+                <a href="#subscribe" class="hover:text-[var(--primary-color)] transition-colors">Subscribe</a>
             </nav>
-            <a href="#subscribe" class="hidden md:block bg-[var(--primary-color)] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[var(--primary-hover-color)] transition duration-300">Get Notified</a>
         </div>
     </header>
 
     <!-- Floating Menu Button & Panel Container -->
-    <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
+    <button id="menu-btn" type="button" class="fixed top-4 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
         <div class="relative w-6 h-6">
             <span class="hamburger-top"></span>
             <span class="hamburger-bottom"></span>
         </div>
     </button>
-
-    <!-- The menu panel that appears -->
     <div id="mobile-menu" class="hidden fixed top-20 right-4 z-40 origin-top-right transform opacity-0 scale-95 flex flex-col items-end space-y-2">
-        <a href="#features" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
-        <a href="#how-it-works" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
-        <a href="#subscribe" class="bg-white rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:bg-gray-200 hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
+        <a href="#features" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">Features</a>
+        <a href="#how-it-works" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">How It Works</a>
+        <a href="#subscribe" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">Subscribe</a>
     </div>
 
-
     <!-- Hero Section -->
-    <main class="w-full flex flex-col min-h-[calc(90vh-80px)] pt-16 pb-16">
+    <main class="w-full flex flex-col justify-center min-h-[calc(100vh-80px)] pt-16 pb-16">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">When you focus on the good, the good gets better.</h1>
-            <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">HumanKind is a mobile app that fosters gratitude and emotionally healthy relationships through daily, personalized messages and a culture-forward rewards system.</p>
-            <div class="mt-8">
-                <a href="#subscribe" class="bg-[var(--primary-color)] text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-[var(--primary-hover-color)] transition duration-300">Join the Waitlist</a>
+            <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
+                When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">
+                HumanKind is a mobile app that fosters gratitude and emotionally healthy relationships through daily, personalized messages and a culture-forward rewards system.
+            </p>
+            <div class="mt-10 animate-on-scroll" style="transition-delay: 300ms;">
+                <a href="#subscribe" class="modern-btn text-white font-semibold px-8 py-4 rounded-lg text-lg">Join the Waitlist</a>
             </div>
         </div>
     </main>
 
     <!-- Features Section -->
-    <section id="features" class="bg-white py-20">
+    <section id="features" class="bg-white py-20 text-gray-800">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Why You'll Love HumanKind</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Why You'll Love HumanKind</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <!-- Feature 1 -->
-                <div class="text-center">
-                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
+                <div class="text-center animate-on-scroll">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-6">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Daily Gratitude Practice</h3>
+                    <h3 class="text-xl font-semibold mb-2">Daily Gratitude Practice</h3>
                     <p class="text-gray-600">Make thankfulness a daily ritual. Our app gently reminds you to send three messages of gratitude, making it easy to build a positive habit.</p>
                 </div>
-                <!-- Feature 2 -->
-                <div class="text-center">
-                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
+                <div class="text-center animate-on-scroll" style="transition-delay: 150ms;">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-6">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Meaningful Connections</h3>
+                    <h3 class="text-xl font-semibold mb-2">Meaningful Connections</h3>
                     <p class="text-gray-600">Strengthen your relationships by regularly expressing why you're grateful for the people in your life. A small message can make a big impact.</p>
                 </div>
-                <!-- Feature 3 -->
-                <div class="text-center">
-                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-4">
+                <div class="text-center animate-on-scroll" style="transition-delay: 300ms;">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-[var(--primary-light-bg)] mx-auto mb-6">
                         <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">A Private Journal of Joy</h3>
+                    <h3 class="text-xl font-semibold mb-2">A Private Journal of Joy</h3>
                     <p class="text-gray-600">Your sent messages create a personal history of the good things in your life, creating a private journal you can look back on.</p>
                 </div>
             </div>
@@ -152,51 +169,48 @@
     <!-- How It Works Section -->
     <section id="how-it-works" class="py-20">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Start Sharing Gratitude in 3 Simple Steps</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Start Sharing Gratitude in 3 Simple Steps</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                 <!-- Step 1 -->
-                <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
-                    <p class="text-lg text-gray-700 font-semibold">Join the Waitlist</p>
+                    <p class="text-lg font-semibold">Join the Waitlist</p>
                 </div>
-                 <!-- Step 2 -->
-                 <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">2</div>
-                    <p class="text-lg text-gray-700 font-semibold">Receive Your Early Access Invite</p>
+                    <p class="text-lg font-semibold">Receive Your Early Access Invite</p>
                 </div>
-                 <!-- Step 3 -->
-                 <div class="bg-white p-8 rounded-full shadow-lg flex flex-col items-center justify-center text-center h-48">
+                <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">3</div>
-                    <p class="text-lg text-gray-700 font-semibold">Start Spreading Kindness</p>
+                    <p class="text-lg font-semibold">Start Spreading Kindness</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Subscription Section -->
-    <section id="subscribe" class="bg-[var(--primary-dark-bg)] py-20">
+    <section id="subscribe" class="py-20 bg-[var(--primary-dark-bg)] text-[var(--primary-light-text)]">
         <div class="px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Join a Community of Kindness</h2>
-            <p id="subscribe-prompt" class="text-[var(--primary-light-text)] text-lg mb-8 max-w-2xl mx-auto">Be the first to know when HumanKind launches. Join our mailing list for updates and to become part of a movement to make the world a more grateful place.</p>
-            <div id="form-container">
+            <h2 class="text-4xl font-bold mb-4 animate-on-scroll">Join a Community of Kindness</h2>
+            <p id="subscribe-prompt" class="text-lg mb-8 max-w-2xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">Be the first to know when HumanKind launches. Join our mailing list for updates and to become part of a movement to make the world a more grateful place.</p>
+            <div id="form-container" class="animate-on-scroll" style="transition-delay: 300ms;">
                 <form id="subscribeForm" class="max-w-md mx-auto">
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <input type="email" id="emailInput" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--primary-ring-color)]" required>
-                        <button type="submit" id="submitBtn" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300">Notify Me</button>
+                        <input type="email" id="emailInput" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--primary-ring-color)]" required>
+                        <button type="submit" id="submitBtn" class="modern-btn text-white font-semibold px-6 py-3 rounded-lg">Notify Me</button>
                     </div>
                 </form>
             </div>
             <div id="messageContainer" class="hidden">
-                 <p id="statusMessage" class="text-[var(--primary-light-text)] text-lg mb-4"></p>
-                 <button id="addAnotherEmailBtn" class="bg-white text-[var(--primary-color)] font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-300 hidden">Add another Email</button>
+                 <p id="statusMessage" class="text-lg mb-4"></p>
+                 <button id="addAnotherEmailBtn" class="modern-btn text-white font-semibold px-6 py-3 rounded-lg hidden">Add another Email</button>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
+    <footer class="py-12 bg-gray-100">
         <div class="px-6 text-center">
-            <p>&copy; 2025 HumanKind. All rights reserved.</p>
+            <p class="text-gray-500">&copy; 2025 HumanKind. All rights reserved.</p>
         </div>
     </footer>
 
@@ -218,58 +232,35 @@
             }
         };
 
-        // --- Hide Header on Scroll Logic ---
         let lastScrollTop = 0;
         const handleScrollAndResize = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const isDesktop = window.innerWidth >= 768;
-
-            // --- Header Visibility ---
             if (scrollTop > lastScrollTop && scrollTop > 100) {
                 mainHeader.classList.add('-translate-y-full');
             } else {
                 mainHeader.classList.remove('-translate-y-full');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
-            // --- Button Visibility & Style ---
             const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
-
-            if (isDesktop) {
-                // Desktop logic: button appears only when header is hidden
-                if (isHeaderHidden) {
-                    menuBtn.classList.remove('opacity-0', 'pointer-events-none');
-                    menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
-                } else {
-                    menuBtn.classList.add('opacity-0', 'pointer-events-none');
-                    menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
-                    // Also close the menu if the header becomes visible and the menu is open
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        toggleMenu();
-                    }
-                }
-            } else {
-                // Mobile logic: button is always visible
+            if (isHeaderHidden) {
                 menuBtn.classList.remove('opacity-0', 'pointer-events-none');
-                menuBtn.classList.add('opacity-100', 'pointer-events-auto');
-                if (isHeaderHidden) {
-                    menuBtn.classList.add('bubble');
-                } else {
-                    menuBtn.classList.remove('bubble');
+                menuBtn.classList.add('opacity-100', 'pointer-events-auto', 'bubble');
+            } else {
+                menuBtn.classList.add('opacity-0', 'pointer-events-none');
+                menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
                 }
             }
         };
-
         window.addEventListener('scroll', handleScrollAndResize);
         window.addEventListener('resize', handleScrollAndResize);
         document.addEventListener('DOMContentLoaded', handleScrollAndResize);
-
 
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
         mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
         window.addEventListener('click', (e) => { if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) { toggleMenu(); } });
 
-        // --- Subscription Form Logic ---
         const subscribeForm = document.getElementById('subscribeForm');
         const emailInput = document.getElementById('emailInput');
         const submitBtn = document.getElementById('submitBtn');
@@ -282,12 +273,9 @@
         subscribeForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             const email = emailInput.value;
-            
             if (!email) return;
-
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
-
             try {
                 const response = await fetch('/api/subscribe', {
                     method: 'POST',
@@ -321,7 +309,21 @@
             submitBtn.disabled = false;
             submitBtn.textContent = 'Notify Me';
         });
-    </script>
 
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const targets = document.querySelectorAll('.animate-on-scroll');
+        targets.forEach(target => {
+            observer.observe(target);
+        });
+    </script>
 </body>
 </html>
