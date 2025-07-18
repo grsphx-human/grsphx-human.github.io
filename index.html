@@ -28,10 +28,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* =====================================================================
-        Theme & Font Configuration
-        =====================================================================
-        */
         :root {
             --primary-color: #D98236; /* Muted Orange for main buttons */
             --primary-hover-color: #D95E32; /* Brighter Custom Orange for hover */
@@ -45,35 +41,24 @@
             scroll-behavior: smooth;
         }
 
-        /* ==== MODIFICATION START: Animated Gradient BG ==== */
+        /* ==== MODIFICATION: Reverted body background to original ==== */
         body {
             font-family: 'Sora', sans-serif;
+            background-color: #F9FAFB; /* gray-50 */
             color: #1F2937; /* gray-800 */
             padding-top: 50px; 
-            background: linear-gradient(-45deg, #fceee4, #fdf8f4, #f0e6d6, #f9fafb);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
         }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* ==== MODIFICATION END ==== */
 
         section {
             scroll-margin-top: 50px;
         }
 
-        /* ==== MODIFICATION START: Added transition for dynamic text ==== */
         .gradient-text {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             transition: opacity 0.3s ease-in-out;
         }
-        /* ==== MODIFICATION END ==== */
 
         .modern-btn {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
@@ -166,7 +151,7 @@
         </div>
     </main>
 
-    <section id="features" class="bg-white/95 py-20 text-gray-800">
+    <section id="features" class="bg-white py-20 text-gray-800">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Why You'll Love HumanKind</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -198,20 +183,16 @@
     <section id="how-it-works" class="py-20">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Start Sharing Gratitude in 3 Simple Steps</h2>
-            <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2">
-                    <div id="connector-line" class="h-1 bg-[var(--primary-color)] transition-all duration-1000 ease-out" style="width: 0%;"></div>
-                </div>
-
-                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
                     <p class="text-lg font-semibold">Join the Waitlist Below</p>
                 </div>
-                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">2</div>
                     <p class="text-lg font-semibold">Receive Your Early Access Invite</p>
                 </div>
-                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
+                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">3</div>
                     <p class="text-lg font-semibold">Start Spreading Kindness</p>
                 </div>
@@ -238,7 +219,7 @@
         </div>
     </section>
 
-    <footer class="py-12 bg-gray-100/80">
+    <footer class="py-12 bg-gray-100">
         <div class="px-6 text-center">
             <p class="text-gray-500">&copy; 2025 HumanKind. All rights reserved.</p>
         </div>
@@ -404,31 +385,23 @@
         };
 
         const howItWorksSection = document.getElementById('how-it-works');
-        const connectorLine = document.getElementById('connector-line');
-
+        
         const stepObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    if (window.innerWidth >= 768 && connectorLine) {
-                        setTimeout(() => { connectorLine.style.width = '100%'; }, 300); 
-                    }
                     window.addEventListener('scroll', handleStepScroll);
                     handleStepScroll(); 
                 } else {
-                    if (window.innerWidth >= 768 && connectorLine) {
-                       connectorLine.style.width = '0%';
-                    }
                     window.removeEventListener('scroll', handleStepScroll);
                 }
             });
-        }, { threshold: 0.5 }); 
+        }, { threshold: 0.1 }); 
 
         if (howItWorksSection) {
             stepObserver.observe(howItWorksSection);
         }
         window.addEventListener('resize', handleStepScroll);
 
-        // ==== MODIFICATION START: Dynamic word cycler ====
         const dynamicWords = ['good', 'joy', 'kindness', 'connection'];
         let dynamicWordIndex = 0;
         const dynamicWordEl = document.getElementById('dynamic-word');
@@ -443,7 +416,6 @@
                 }, 300); 
             }, 2500);
         }
-        // ==== MODIFICATION END ====
     </script>
 </body>
 </html>
