@@ -58,6 +58,13 @@
             -webkit-text-fill-color: transparent;
             transition: opacity 0.3s ease-in-out;
         }
+        
+        /* ==== MODIFICATION START: Added styles for fixed width ==== */
+        .js-dynamic-word {
+            display: inline-block;
+            text-align: center;
+        }
+        /* ==== MODIFICATION END ==== */
 
         .modern-btn {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
@@ -401,12 +408,28 @@
         }
         window.addEventListener('resize', handleStepScroll);
 
-        // ==== MODIFICATION: Updated word cycler to target both elements ====
-        const dynamicWords = ['good', 'hope', 'bond', ' love', ' care'];
+        // ==== MODIFICATION START: Logic to set fixed width and cycle words ====
+        const dynamicWords = ['good', 'love', 'kindness', 'gratitude'];
         let dynamicWordIndex = 0;
         const dynamicWordElements = document.querySelectorAll('.js-dynamic-word');
 
         if (dynamicWordElements.length > 0) {
+            // Find the longest word to set a fixed width for the container
+            const longestWord = dynamicWords.reduce((a, b) => a.length > b.length ? a : b);
+            
+            // Use the first element to measure the required width
+            const tempEl = dynamicWordElements[0];
+            const originalText = tempEl.textContent;
+            tempEl.textContent = longestWord;
+            const width = tempEl.offsetWidth;
+            tempEl.textContent = originalText; // Set it back right away
+
+            // Apply the calculated width to all dynamic word elements
+            dynamicWordElements.forEach(el => {
+                el.style.width = `${width}px`;
+            });
+
+            // Now, start the word cycling animation
             setInterval(() => {
                 dynamicWordIndex = (dynamicWordIndex + 1) % dynamicWords.length;
                 
@@ -422,6 +445,7 @@
                 }, 300); 
             }, 2500);
         }
+        // ==== MODIFICATION END ====
     </script>
 </body>
 </html>
