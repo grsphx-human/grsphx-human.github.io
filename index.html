@@ -155,8 +155,13 @@
     <main class="w-full flex flex-col md:justify-center min-h-[calc(100vh-64px)] py-16">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
+                When you focus on the <span id="dynamic-word" class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
+            </h1>
+            <!--
+            <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
                 When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
             </h1>
+            -->
             <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">
                 HumanKind is a mobile app that fosters gratitude and connection through daily, messages to friends and family.
             </p>
@@ -422,6 +427,26 @@
         }
         window.addEventListener('resize', handleStepScroll);
 
+        // Word Cycle
+        const words = ['good', 'joy', 'kindness', 'connection'];
+        let wordIndex = 0;
+        const dynamicWord = document.getElementById('dynamic-word');
+
+        setInterval(() => {
+            wordIndex = (wordIndex + 1) % words.length;
+            dynamicWord.style.opacity = 0; // Fade out
+            setTimeout(() => {
+                dynamicWord.textContent = words[wordIndex];
+                dynamicWord.style.opacity = 1; // Fade in
+            }, 300); // Match this with a CSS transition if you prefer
+        }, 2500); // Change word every 2.5 seconds
+        
+        // Add a transition to the gradient-text class for smooth fades
+        // in your <style> tag
+        .gradient-text {
+            /* ... existing styles ... */
+            transition: opacity 0.3s ease-in-out;
+        }
     </script>
 </body>
 </html>
