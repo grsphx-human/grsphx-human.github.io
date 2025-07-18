@@ -5,25 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HumanKind - A Daily Gratitude App</title>
 
-    <!-- SEO Meta Tags -->
     <meta name="description" content="HumanKind is a daily gratitude app designed to help you build stronger relationships and improve your well-being by sending simple, meaningful messages of appreciation.">
     <meta name="keywords" content="gratitude, kindness, relationships, mental health, wellness, mindfulness, appreciation, positive habits, self-improvement, HumanKind app">
 
-    <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://join-humankind.com/">
     <meta property="og:title" content="HumanKind - A Daily Gratitude App">
     <meta property="og:description" content="Send 3 gratitude messages a day and build a life of connection and joy.">
     <meta property="og:image" content="https://join-humankind.com/logo.png">
 
-    <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://join-humankind.com/">
     <meta property="twitter:title" content="HumanKind - A Daily Gratitude App">
     <meta property="twitter:description" content="Send 3 gratitude messages a day and build a life of connection and joy.">
     <meta property="twitter:image" content="https://join-humankind.com/logo.png">
 
-    <!-- Favicon Link -->
     <link rel="icon" type="image/png" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,26 +45,36 @@
             scroll-behavior: smooth;
         }
 
+        /* ==== MODIFICATION START: Animated Gradient BG ==== */
         body {
             font-family: 'Sora', sans-serif;
-            background-color: #F9FAFB; /* gray-50 */
             color: #1F2937; /* gray-800 */
             padding-top: 50px; 
+            background: linear-gradient(-45deg, #fceee4, #fdf8f4, #f0e6d6, #f9fafb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        /* Add scroll margin to sections to offset the fixed header */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* ==== MODIFICATION END ==== */
+
         section {
             scroll-margin-top: 50px;
         }
 
-        /* Gradient Text */
+        /* ==== MODIFICATION START: Added transition for dynamic text ==== */
         .gradient-text {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            transition: opacity 0.3s ease-in-out;
         }
+        /* ==== MODIFICATION END ==== */
 
-        /* Modern Button Style */
         .modern-btn {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             transition: all 0.3s ease;
@@ -78,7 +84,6 @@
             box-shadow: 0 10px 20px -10px var(--primary-color);
         }
 
-        /* Styles for the animated hamburger menu icon */
         .hamburger-top,
         .hamburger-bottom {
             position: absolute;
@@ -100,7 +105,6 @@
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
-        /* Scroll Animation Styles */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -111,7 +115,6 @@
             transform: translateY(0);
         }
         
-        /* Mobile-only scroll fade animation */
         .step-item {
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
         }
@@ -123,7 +126,6 @@
 </head>
 <body id="top">
 
-    <!-- Header -->
     <header id="main-header" class="bg-white/80 backdrop-blur-sm fixed top-0 w-full z-30 transition-transform duration-300 ease-in-out">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#top" class="flex items-center space-x-3">
@@ -138,7 +140,6 @@
         </div>
     </header>
 
-    <!-- Floating Menu Button & Panel Container -->
     <button id="menu-btn" type="button" class="fixed top-2 right-4 z-50 w-12 h-12 flex justify-center items-center focus:outline-none rounded-full transition-all duration-300">
         <div class="relative w-6 h-6">
             <span class="hamburger-top"></span>
@@ -151,17 +152,11 @@
         <a href="#subscribe" class="bg-white/90 backdrop-blur-sm rounded-full px-5 py-2 text-base font-semibold text-gray-800 shadow-lg hover:text-[var(--primary-color)] transition-colors duration-200">Join</a>
     </div>
 
-    <!-- Hero Section -->
     <main class="w-full flex flex-col md:justify-center min-h-[calc(100vh-64px)] py-16">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
                 When you focus on the <span id="dynamic-word" class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
             </h1>
-            <!--
-            <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
-                When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
-            </h1>
-            -->
             <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">
                 HumanKind is a mobile app that fosters gratitude and connection through daily, messages to friends and family.
             </p>
@@ -171,8 +166,7 @@
         </div>
     </main>
 
-    <!-- Features Section -->
-    <section id="features" class="bg-white py-20 text-gray-800">
+    <section id="features" class="bg-white/95 py-20 text-gray-800">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Why You'll Love HumanKind</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -201,20 +195,23 @@
         </div>
     </section>
 
-    <!-- How It Works Section -->
     <section id="how-it-works" class="py-20">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll">Start Sharing Gratitude in 3 Simple Steps</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
+            <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2">
+                    <div id="connector-line" class="h-1 bg-[var(--primary-color)] transition-all duration-1000 ease-out" style="width: 0%;"></div>
+                </div>
+
+                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">1</div>
                     <p class="text-lg font-semibold">Join the Waitlist Below</p>
                 </div>
-                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
+                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 150ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">2</div>
                     <p class="text-lg font-semibold">Receive Your Early Access Invite</p>
                 </div>
-                <div class="step-item bg-white p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
+                <div class="step-item relative z-10 bg-white/95 p-8 rounded-3xl flex flex-col items-center justify-center text-center h-48 animate-on-scroll shadow-lg" style="transition-delay: 300ms;">
                     <div class="flex items-center justify-center h-12 w-12 rounded-full bg-[var(--primary-color)] text-white font-bold text-xl mb-4 flex-shrink-0">3</div>
                     <p class="text-lg font-semibold">Start Spreading Kindness</p>
                 </div>
@@ -222,7 +219,6 @@
         </div>
     </section>
 
-    <!-- Subscription Section -->
     <section id="subscribe" class="py-20 bg-[var(--primary-dark-bg)] text-[var(--primary-light-text)]">
         <div class="px-6 text-center">
             <h2 class="text-4xl font-bold mb-4 animate-on-scroll">Join a Community of Gratitude</h2>
@@ -242,8 +238,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-12 bg-gray-100">
+    <footer class="py-12 bg-gray-100/80">
         <div class="px-6 text-center">
             <p class="text-gray-500">&copy; 2025 HumanKind. All rights reserved.</p>
         </div>
@@ -376,10 +371,9 @@
             observer.observe(target);
         });
         
-        // Mobile-only scroll fade animation for "How it Works" section
         const steps = document.querySelectorAll('.step-item');
         const handleStepScroll = () => {
-            if (window.innerWidth < 768) { // Only run on mobile
+            if (window.innerWidth < 768) { 
                 const viewportCenter = window.innerHeight / 2;
                 let closestStep = null;
                 let minDistance = Infinity;
@@ -403,7 +397,6 @@
                     }
                 });
             } else {
-                // On desktop, ensure all steps are visible
                 steps.forEach(step => {
                     step.classList.remove('faded-out');
                 });
@@ -411,42 +404,46 @@
         };
 
         const howItWorksSection = document.getElementById('how-it-works');
+        const connectorLine = document.getElementById('connector-line');
+
         const stepObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    if (window.innerWidth >= 768 && connectorLine) {
+                        setTimeout(() => { connectorLine.style.width = '100%'; }, 300); 
+                    }
                     window.addEventListener('scroll', handleStepScroll);
-                    handleStepScroll(); // Initial check
+                    handleStepScroll(); 
                 } else {
+                    if (window.innerWidth >= 768 && connectorLine) {
+                       connectorLine.style.width = '0%';
+                    }
                     window.removeEventListener('scroll', handleStepScroll);
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.5 }); 
 
         if (howItWorksSection) {
             stepObserver.observe(howItWorksSection);
         }
         window.addEventListener('resize', handleStepScroll);
 
-        // Word Cycle
-        const words = ['good', 'joy', 'kindness', 'connection'];
-        let wordIndex = 0;
-        const dynamicWord = document.getElementById('dynamic-word');
+        // ==== MODIFICATION START: Dynamic word cycler ====
+        const dynamicWords = ['good', 'joy', 'kindness', 'connection'];
+        let dynamicWordIndex = 0;
+        const dynamicWordEl = document.getElementById('dynamic-word');
 
-        setInterval(() => {
-            wordIndex = (wordIndex + 1) % words.length;
-            dynamicWord.style.opacity = 0; // Fade out
-            setTimeout(() => {
-                dynamicWord.textContent = words[wordIndex];
-                dynamicWord.style.opacity = 1; // Fade in
-            }, 300); // Match this with a CSS transition if you prefer
-        }, 2500); // Change word every 2.5 seconds
-        
-        // Add a transition to the gradient-text class for smooth fades
-        // in your <style> tag
-        .gradient-text {
-            /* ... existing styles ... */
-            transition: opacity 0.3s ease-in-out;
+        if (dynamicWordEl) {
+            setInterval(() => {
+                dynamicWordIndex = (dynamicWordIndex + 1) % dynamicWords.length;
+                dynamicWordEl.style.opacity = 0; 
+                setTimeout(() => {
+                    dynamicWordEl.textContent = dynamicWords[dynamicWordIndex];
+                    dynamicWordEl.style.opacity = 1; 
+                }, 300); 
+            }, 2500);
         }
+        // ==== MODIFICATION END ====
     </script>
 </body>
 </html>
