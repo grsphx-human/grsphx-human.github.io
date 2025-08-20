@@ -58,14 +58,7 @@
             -webkit-text-fill-color: transparent;
             transition: opacity 0.3s ease-in-out;
         }
-        
-        /* ==== MODIFICATION START: Added styles for fixed width ==== */
-        .js-dynamic-word {
-            display: inline-block;
-            text-align: center;
-        }
-        /* ==== MODIFICATION END ==== */
-
+       
         .modern-btn {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             transition: all 0.3s ease;
@@ -105,7 +98,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
+       
         .step-item {
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
         }
@@ -146,7 +139,7 @@
     <main class="w-full flex flex-col md:justify-center min-h-[calc(100vh-64px)] py-16">
         <div class="w-full max-w-7xl mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-8xl font-bold leading-tight animate-on-scroll">
-                When you focus on the <span class="gradient-text js-dynamic-word">good</span>, the <span class="gradient-text js-dynamic-word">good</span> gets better.
+                When you focus on the <span class="gradient-text">good</span>, the <span class="gradient-text">good</span> gets better.
             </h1>
             <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">
                 HumanKind is a mobile app that fosters gratitude and connection through daily, messages to friends and family.
@@ -357,7 +350,7 @@
         targets.forEach(target => {
             observer.observe(target);
         });
-        
+       
         const steps = document.querySelectorAll('.step-item');
         const handleStepScroll = () => {
             if (window.innerWidth < 768) { 
@@ -391,7 +384,7 @@
         };
 
         const howItWorksSection = document.getElementById('how-it-works');
-        
+       
         const stepObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -408,43 +401,8 @@
         }
         window.addEventListener('resize', handleStepScroll);
 
-        // ==== MODIFICATION START: Logic to set fixed width and cycle words ====
-        const dynamicWords = ['good', 'love', 'kindness', 'gratitude'];
-        let dynamicWordIndex = 0;
-        const dynamicWordElements = document.querySelectorAll('.js-dynamic-word');
-
-        if (dynamicWordElements.length > 0) {
-            // Find the longest word to set a fixed width for the container
-            const longestWord = dynamicWords.reduce((a, b) => a.length > b.length ? a : b);
-            
-            // Use the first element to measure the required width
-            const tempEl = dynamicWordElements[0];
-            const originalText = tempEl.textContent;
-            tempEl.textContent = longestWord;
-            const width = tempEl.offsetWidth;
-            tempEl.textContent = originalText; // Set it back right away
-
-            // Apply the calculated width to all dynamic word elements
-            dynamicWordElements.forEach(el => {
-                el.style.width = `${width}px`;
-            });
-
-            // Now, start the word cycling animation
-            setInterval(() => {
-                dynamicWordIndex = (dynamicWordIndex + 1) % dynamicWords.length;
-                
-                dynamicWordElements.forEach(el => {
-                    el.style.opacity = 0; 
-                });
-                
-                setTimeout(() => {
-                    dynamicWordElements.forEach(el => {
-                        el.textContent = dynamicWords[dynamicWordIndex];
-                        el.style.opacity = 1; 
-                    });
-                }, 300); 
-            }, 2500);
-        }
+        // ==== MODIFICATION START: Word cycling logic removed ====
+        // The JavaScript that caused the words to cycle has been deleted.
         // ==== MODIFICATION END ====
     </script>
 </body>
