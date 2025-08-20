@@ -36,29 +36,19 @@
             --primary-light-text: #F0EAD6; /* Light Beige for text on dark bg */
             --primary-ring-color: #FDBA74; /* Light Orange for focus ring */
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Sora', sans-serif;
-            background-color: #F9FAFB; /* gray-50 */
-            color: #1F2937; /* gray-800 */
+            background-color: #F9FAFB;
+            color: #1F2937;
             padding-top: 50px; 
         }
-
-        section {
-            scroll-margin-top: 50px;
-        }
-
+        section { scroll-margin-top: 50px; }
         .gradient-text {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transition: opacity 0.3s ease-in-out;
         }
-       
         .modern-btn {
             background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
             transition: all 0.3s ease;
@@ -67,16 +57,12 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px -10px var(--primary-color);
         }
-
-        .hamburger-top,
-        .hamburger-bottom {
+        .hamburger-top, .hamburger-bottom {
             position: absolute;
-            top: 50%;
-            left: 0;
+            top: 50%; left: 0;
             margin-top: -1px;
-            width: 24px;
-            height: 2px;
-            background-color: #1F2937; /* gray-800 */
+            width: 24px; height: 2px;
+            background-color: #1F2937;
             transition: all 0.3s ease-in-out;
         }
         .hamburger-top { transform: translateY(-5px); }
@@ -88,7 +74,6 @@
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -98,10 +83,7 @@
             opacity: 1;
             transform: translateY(0);
         }
-       
-        .step-item {
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-        }
+        .step-item { transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; }
         .step-item.faded-out {
             opacity: 0.2;
             transform: scale(0.95);
@@ -202,7 +184,8 @@
     <section id="subscribe" class="py-20 bg-[var(--primary-dark-bg)] text-[var(--primary-light-text)]">
         <div class="px-6 text-center">
             <h2 class="text-4xl font-bold mb-4 animate-on-scroll">Join a Community of Gratitude</h2>
-            <p id="subscribe-prompt" class="text-lg mb-8 max-w-2xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">Be the first to know when HumanKind launches. Join our mailing list for updates and to become part of a movement to make the world a more grateful place.</p>
+            <p id="subscribe-prompt" class="text-lg mb-8 max-w-2xl mx-auto animate-on-scroll" style="transition-delay: 150ms;">Be the first to know when HumanKind launches. Join our mailing list for updates.</p>
+            
             <div id="form-container" class="animate-on-scroll" style="transition-delay: 300ms;">
                 <form id="subscribeForm" class="max-w-md mx-auto">
                     <div class="flex flex-col sm:flex-row gap-4">
@@ -211,9 +194,9 @@
                     </div>
                 </form>
             </div>
+            
             <div id="messageContainer" class="hidden">
-                 <p id="statusMessage" class="text-lg mb-4"></p>
-                 <button id="addAnotherEmailBtn" class="modern-btn text-white font-semibold px-6 py-3 rounded-lg hidden">Add another Email</button>
+                 <p id="statusMessage" class="text-lg"></p>
             </div>
         </div>
     </section>
@@ -224,7 +207,77 @@
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        // =========================================================================
+        // Firebase SDK and Configuration
+        // =========================================================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // TODO: Replace this with your web app's Firebase configuration.
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDUNd7fekWmk-IPCHwxEz3gxWU4pBNecqI",
+          authDomain: "humankind-email-collection.firebaseapp.com",
+          projectId: "humankind-email-collection",
+          storageBucket: "humankind-email-collection.firebasestorage.app",
+          messagingSenderId: "1031378804643",
+          appId: "1:1031378804643:web:0e619c76d7185a95f88416",
+          measurementId: "G-WK35RNPXKM"
+        };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // =========================================================================
+        // Firebase Form Submission Logic
+        // =========================================================================
+        const subscribeForm = document.getElementById('subscribeForm');
+
+        // Check if the form exists before adding an event listener
+        if (subscribeForm) {
+            subscribeForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const emailInput = document.getElementById('emailInput');
+                const submitBtn = document.getElementById('submitBtn');
+                const formContainer = document.getElementById('form-container');
+                const messageContainer = document.getElementById('messageContainer');
+                const statusMessage = document.getElementById('statusMessage');
+                const subscribePrompt = document.getElementById('subscribe-prompt');
+                
+                const email = emailInput.value;
+                if (!email) return;
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+
+                try {
+                    // Add a new document to the "subscribers" collection in Firestore
+                    await addDoc(collection(db, "subscribers"), {
+                        email: email,
+                        subscribedAt: serverTimestamp()
+                    });
+
+                    statusMessage.textContent = "Thank you for subscribing! We're excited to have you.";
+                    formContainer.classList.add('hidden');
+                    subscribePrompt.classList.add('hidden');
+                    messageContainer.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    statusMessage.textContent = 'An error occurred. Please try again later.';
+                    messageContainer.classList.remove('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Notify Me';
+                }
+            });
+        }
+        
+        // =========================================================================
+        // Original Page Logic (Menus, Animations, etc.)
+        // =========================================================================
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mainHeader = document.getElementById('main-header');
@@ -253,7 +306,6 @@
                 mainHeader.classList.remove('-translate-y-full');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
             const isHeaderHidden = mainHeader.classList.contains('-translate-y-full');
 
             if (isDesktop) {
@@ -263,14 +315,11 @@
                 } else {
                     menuBtn.classList.add('opacity-0', 'pointer-events-none');
                     menuBtn.classList.remove('opacity-100', 'pointer-events-auto', 'bubble');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        toggleMenu();
-                    }
+                    if (!mobileMenu.classList.contains('hidden')) toggleMenu();
                 }
             } else {
                 menuBtn.classList.remove('opacity-0', 'pointer-events-none');
                 menuBtn.classList.add('opacity-100', 'pointer-events-auto');
-
                 if (isHeaderHidden) {
                     menuBtn.classList.add('bubble');
                 } else {
@@ -283,59 +332,9 @@
         window.addEventListener('resize', handleScrollAndResize);
         document.addEventListener('DOMContentLoaded', handleScrollAndResize);
 
-
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
-        mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { toggleMenu(); } });
-        window.addEventListener('click', (e) => { if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) { toggleMenu(); } });
-
-        const subscribeForm = document.getElementById('subscribeForm');
-        const emailInput = document.getElementById('emailInput');
-        const submitBtn = document.getElementById('submitBtn');
-        const formContainer = document.getElementById('form-container');
-        const messageContainer = document.getElementById('messageContainer');
-        const statusMessage = document.getElementById('statusMessage');
-        const addAnotherEmailBtn = document.getElementById('addAnotherEmailBtn');
-        const subscribePrompt = document.getElementById('subscribe-prompt');
-
-        subscribeForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const email = emailInput.value;
-            if (!email) return;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
-            try {
-                const response = await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email }),
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    statusMessage.textContent = "Thank you for subscribing! We're excited to have you.";
-                } else {
-                    statusMessage.textContent = result.message || 'An error occurred. Please try again.';
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                statusMessage.textContent = 'Could not connect. Please check your network and try again.';
-            } finally {
-                addAnotherEmailBtn.classList.remove('hidden');
-                formContainer.classList.add('hidden');
-                subscribePrompt.classList.add('hidden');
-                messageContainer.classList.remove('hidden');
-            }
-        });
-
-        addAnotherEmailBtn.addEventListener('click', function() {
-            messageContainer.classList.add('hidden');
-            addAnotherEmailBtn.classList.add('hidden');
-            statusMessage.textContent = '';
-            formContainer.classList.remove('hidden');
-            subscribePrompt.classList.remove('hidden');
-            emailInput.value = '';
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Notify Me';
-        });
+        mobileMenu.addEventListener('click', (e) => { if (e.target.tagName === 'A') toggleMenu(); });
+        window.addEventListener('click', (e) => { if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) toggleMenu(); });
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -347,44 +346,32 @@
         }, { threshold: 0.1 });
 
         const targets = document.querySelectorAll('.animate-on-scroll');
-        targets.forEach(target => {
-            observer.observe(target);
-        });
-       
+        targets.forEach(target => observer.observe(target));
+        
         const steps = document.querySelectorAll('.step-item');
         const handleStepScroll = () => {
             if (window.innerWidth < 768) { 
                 const viewportCenter = window.innerHeight / 2;
                 let closestStep = null;
                 let minDistance = Infinity;
-
                 steps.forEach(step => {
                     const rect = step.getBoundingClientRect();
                     const stepCenter = rect.top + rect.height / 2;
                     const distance = Math.abs(viewportCenter - stepCenter);
-
                     if (distance < minDistance) {
                         minDistance = distance;
                         closestStep = step;
                     }
                 });
-
                 steps.forEach(step => {
-                    if (step === closestStep) {
-                        step.classList.remove('faded-out');
-                    } else {
-                        step.classList.add('faded-out');
-                    }
+                    step.classList.toggle('faded-out', step !== closestStep);
                 });
             } else {
-                steps.forEach(step => {
-                    step.classList.remove('faded-out');
-                });
+                steps.forEach(step => step.classList.remove('faded-out'));
             }
         };
 
         const howItWorksSection = document.getElementById('how-it-works');
-       
         const stepObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -400,10 +387,6 @@
             stepObserver.observe(howItWorksSection);
         }
         window.addEventListener('resize', handleStepScroll);
-
-        // ==== MODIFICATION START: Word cycling logic removed ====
-        // The JavaScript that caused the words to cycle has been deleted.
-        // ==== MODIFICATION END ====
     </script>
 </body>
 </html>
