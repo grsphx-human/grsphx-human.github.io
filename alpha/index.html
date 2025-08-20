@@ -56,7 +56,7 @@
         <!-- NDA Text Box -->
         <div id="nda-text" class="nda-text h-64 overflow-y-scroll border border-gray-300 rounded-lg p-4 bg-gray-50 text-gray-700 text-sm">
             <h2 class="font-bold text-lg mb-2 text-gray-800">1. Confidential Information</h2>
-            <p class="mb-4">You agree that all information disclosed to you during the alpha testing of the Humankind app, including but not limited to, features, design, user interface, business plans, and performance metrics ("Confidential Information") is the proprietary and confidential property of Humankind Inc. You shall not disclose this Confidential Information to any third party.</p>
+            <p class="mb-4">You agree that all information disclosed to you during the alpha testing of the Humankind app, including but not to, features, design, user interface, business plans, and performance metrics ("Confidential Information") is the proprietary and confidential property of Humankind Inc. You shall not disclose this Confidential Information to any third party.</p>
             <h2 class="font-bold text-lg mb-2 text-gray-800">2. Use of Information</h2>
             <p class="mb-4">You agree to use the Confidential Information solely for the purpose of testing and providing feedback on the Humankind app. Any other use, copying, or distribution of the Confidential Information is strictly prohibited.</p>
             <h2 class="font-bold text-lg mb-2 text-gray-800">3. Feedback</h2>
@@ -99,8 +99,31 @@
         </form>
     </div>
 
-    <script>
-        // Get references to all the interactive elements
+    <script type="module">
+        // =========================================================================
+        // Firebase SDK and Configuration
+        // =========================================================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // IMPORTANT: Replace this with your web app's Firebase configuration.
+        const firebaseConfig = {
+          apiKey: "AIzaSyDUNd7fekWmk-IPCHwxEz3gxWU4pBNecqI",
+          authDomain: "humankind-email-collection.firebaseapp.com",
+          projectId: "humankind-email-collection",
+          storageBucket: "humankind-email-collection.firebasestorage.app",
+          messagingSenderId: "1031378804643",
+          appId: "1:1031378804643:web:0e619c76d7185a95f88416",
+          measurementId: "G-WK35RNPXKM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // =========================================================================
+        // Page Logic
+        // =========================================================================
         const ndaText = document.getElementById('nda-text');
         const agreeCheckbox = document.getElementById('agree-checkbox');
         const agreeLabel = document.getElementById('agree-label');
@@ -110,14 +133,12 @@
         const lastNameInput = document.getElementById('lastName');
         const emailInput = document.getElementById('email');
 
-        // Function to check if all form conditions are met
         function validateForm() {
             const isFirstNameValid = firstNameInput.value.trim() !== '';
             const isLastNameValid = lastNameInput.value.trim() !== '';
-            const isEmailValid = emailInput.checkValidity(); // Simple browser email validation
+            const isEmailValid = emailInput.checkValidity();
             const isCheckboxChecked = agreeCheckbox.checked;
 
-            // Enable the submit button only if all fields are valid and checkbox is checked
             if (isFirstNameValid && isLastNameValid && isEmailValid && isCheckboxChecked) {
                 submitButton.disabled = false;
             } else {
@@ -125,12 +146,8 @@
             }
         }
 
-        // Event listener for scrolling the NDA text
         ndaText.addEventListener('scroll', () => {
-            // Check if the user has scrolled to the bottom
-            // A small tolerance (5px) is added for cross-browser compatibility
             const isScrolledToBottom = ndaText.scrollHeight - ndaText.scrollTop <= ndaText.clientHeight + 5;
-            
             if (isScrolledToBottom) {
                 agreeCheckbox.disabled = false;
                 agreeLabel.classList.remove('text-gray-500');
@@ -139,17 +156,37 @@
             }
         });
 
-        // Add event listeners to all form inputs to validate on change
         [firstNameInput, lastNameInput, emailInput, agreeCheckbox].forEach(element => {
             element.addEventListener('input', validateForm);
         });
 
         // Event listener for form submission
-        form.addEventListener('submit', (event) => {
-            event.preventDefault(); // Prevent the default form submission
-            if (!submitButton.disabled) {
-                // Redirect to the instructions page.
-                window.location.href = '/alpha/instructions/';
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); 
+            if (submitButton.disabled) return;
+
+            // Disable button to prevent multiple submissions
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+
+            try {
+                // Add a new document with the user's details to the "alpha_testers" collection
+                await addDoc(collection(db, "alpha_testers"), {
+                    firstName: firstNameInput.value.trim(),
+                    lastName: lastNameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    agreedAt: serverTimestamp()
+                });
+
+                // If successful, redirect to the instructions page
+                window.location.href = '/alpha/instructions';
+
+            } catch (error) {
+                console.error("Error adding document to Firebase: ", error);
+                // Re-enable the button and inform the user if there was an error
+                submitButton.disabled = false;
+                submitButton.textContent = 'An error occurred. Please try again.';
+                // You could also show a more user-friendly error message on the page
             }
         });
     </script>
