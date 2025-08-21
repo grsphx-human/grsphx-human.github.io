@@ -6,61 +6,42 @@
     <title>Humankind Alpha - Instructions</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Sora (to match your main page) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&family=Oranienbaum&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* App-specific branding and colors */
+        /* Copied directly from your main index.html for a consistent theme */
         :root {
-            --font-cursive: 'Dancing Script', cursive;
-            --font-heading: 'Oranienbaum', serif;
-            --font-body: 'Quicksand', sans-serif;
-
-            --color-primary: #D95E32; /* burnt orange */
-            --color-background: #FDFAF6; /* cream */
-            --color-card: #A69856; /* green */
-            --color-text: #D98236; /* light orange */
-            --color-border: #D94004; /* red */
-            --color-notification: #BACBD9; /* blue */
-            --color-body-text: #5a4e46; /* A darker, readable brown for body text */
+            --primary-color: #D98236; /* Muted Orange for main buttons */
+            --primary-hover-color: #D95E32; /* Brighter Custom Orange for hover */
+            --primary-dark-bg: #D94004;
+            --primary-light-bg: #A69856;
+            --primary-light-text: #F0EAD6;
+            --primary-ring-color: #FDBA74;
         }
-
         body {
-            font-family: var(--font-body);
-            background-color: var(--color-background);
-            color: var(--color-body-text);
-            font-weight: 400; /* Regular weight for better readability */
+            font-family: 'Sora', sans-serif;
+            background-color: #F9FAFB; /* Light gray background from your main page */
+            color: #1F2937; /* Dark text color */
         }
-
-        /* Overriding Tailwind prose for custom typography */
-        .prose h1, .prose h2, .prose h3 {
-            font-family: var(--font-heading);
-            color: var(--color-primary);
+        .modern-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-hover-color));
+            transition: all 0.3s ease;
+            display: inline-block; /* Ensure button styles apply correctly */
         }
-        
-        .prose p, .prose ul, .prose ol {
-             color: var(--color-body-text);
+        .modern-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--primary-color);
         }
-
-        .cursive-text {
-            font-family: var(--font-cursive);
-            color: var(--color-text);
-            font-size: 1.75rem; /* Larger size for tagline */
-            line-height: 1.4;
-        }
-
+        /* Custom style for links to match the theme */
         .themed-link {
-            color: var(--color-primary);
+            color: var(--primary-color);
             font-weight: 600; /* semibold */
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
         }
         .themed-link:hover {
-            color: var(--color-border);
-            text-decoration: underline;
+            color: var(--primary-hover-color);
         }
-
         /* Custom list styling for the steps */
         .step-list {
             list-style: none;
@@ -75,38 +56,38 @@
         }
         .step-list li::before {
             content: counter(step-counter);
-            background-color: var(--color-text);
+            background-color: var(--primary-color);
             color: white;
-            font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-weight: bold;
             border-radius: 50%;
-            width: 2.25rem;
-            height: 2.25rem;
+            width: 2rem;
+            height: 2rem;
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-right: 1rem;
-            border: 2px solid var(--color-background);
         }
     </style>
 </head>
 <body class="flex justify-center items-center min-h-screen p-4 sm:p-8">
 
-    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-6 sm:p-10 border-2 border-orange-100">
-        <div class="prose prose-lg max-w-none">
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-6 sm:p-10">
+        <div class="prose prose-lg max-w-none text-gray-800">
             <!-- Header -->
             <div class="text-center mb-10">
-                <img src="/logo.png" alt="HumanKind Logo" class="h-16 w-16 mx-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/64x64/D98236/FFFFFF?text=HK&font=oranienbaum';">
-                <h1 class="text-5xl !mb-2">HumanKind</h1>
-                <p class="cursive-text !mt-0">when you focus on the good<br>the good gets better</p>
+                <img src="/logo.png" alt="HumanKind Logo" class="h-12 w-12 mx-auto mb-2" onerror="this.onerror=null;this.src='https://placehold.co/48x48/D98236/FFFFFF?text=HK';">
+                <h1 class="text-3xl font-bold">Hello Alpha Testers!</h1>
             </div>
+
+            <p>We're so excited to share that we’re officially opening up alpha testing for HumanKind! 🎉</p>
+            <p class="mt-4">Our app is designed to make gratitude a shared, meaningful part of everyday life. HumanKind is all about building a genuine community around giving and receiving gratitude—something we think the online world could use a lot more of. 🙏</p>
             
             <hr class="my-8">
 
-            <h2 class="text-3xl font-bold">What to Expect</h2>
+            <h2 class="text-2xl font-bold">What to Expect</h2>
             <p>As one of our first-ever alpha testers, you’ll:</p>
-            <ul class="mt-4 list-disc list-inside space-y-2">
+            <ul class="mt-4">
                 <li>🤫 Get early access to the app before anyone else.</li>
                 <li>💡 Help us shape the entire experience with your direct feedback.</li>
                 <li>🌱 Be part of a small, foundational group making HumanKind better from the ground up.</li>
@@ -115,11 +96,11 @@
             
             <hr class="my-8">
 
-            <h2 class="text-3xl font-bold">Feedback Schedule</h2>
+            <h2 class="text-2xl font-bold">Feedback Schedule</h2>
             <p>We’ll ask for feedback at a few key moments, but you can also share your thoughts anytime something comes to mind!</p>
-            <ul class="mt-4 space-y-3">
-                <li>🧠 <strong>Anytime Feedback:</strong> Use this link whenever you notice something worth sharing → <a href="https://docs.google.com/forms/d/e/1FAIpQLSex3kcXkLIXrujaSi56WJnM6UDyHmBy6zqtNvkdRTmdEayCQQ/viewform?usp=dialog" class="themed-link" target="_blank" rel="noopener noreferrer">Feedback Form</a></li>
-                <li>🗓️ <strong>September 6:</strong> Alpha Onboarding Process Starts, invite anyone you want to join you on the app by sending them this link → <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8fLVLYc9e7e-NpUN1SERKZfgBQPT-RJ-a6IGiB7MR2p0fbw/viewform?usp=header" class="themed-link" target="_blank" rel="noopener noreferrer">Invite Form</a></li>
+            <ul class="mt-4">
+                <li>🧠 <strong>Anytime Feedback:</strong> Use this link whenever you notice something worth sharing → <a href="https://docs.google.com/forms/d/e/1FAIpQLSex3kcXkLIXrujaSi56WJnM6UDyHmBy6zqtNvkdRTmdEayCQQ/viewform?usp=dialog" class="themed-link" target="_blank" rel="noopener noreferrer">Link</a></li>
+                <li>🗓️ <strong>September 6:</strong> Alpha Onboarding Process Starts, invite anyone you want to join you on the app by sending them this link → <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8fLVLYc9e7e-NpUN1SERKZfgBQPT-RJ-a6IGiB7MR2p0fbw/viewform?usp=header" class="themed-link" target="_blank" rel="noopener noreferrer">Link</a></li>
                 <li>🗓️ <strong>September 13:</strong> Alpha Onboarding Process Ends, we won’t be accepting new users after this point</li>
                 <li>🗓️ <strong>September 20:</strong> First thoughts and impressions of HumanKind.</li>
                 <li>🗓️ <strong>October 18:</strong> Reflections after one month with the app.</li>
@@ -129,7 +110,7 @@
             <hr class="my-8">
 
             <!-- NDA & Setup Section -->
-            <h2 class="text-3xl font-bold">Getting Started: NDA & App Access</h2>
+            <h2 class="text-2xl font-bold">Getting Started: NDA & App Access</h2>
             <div class="mt-4">
                 <p>Since you’ll be seeing a very early version of HumanKind, we ask all testers to agree to a simple non-disclosure agreement (NDA). This just means please don’t share screenshots, features, or details of the app outside our private testing group.</p>
                 <ol class="step-list mt-6">
@@ -142,13 +123,13 @@
             <hr class="my-8">
 
             <!-- Support Section -->
-            <h2 class="text-3xl font-bold">Need More Help?</h2>
+            <h2 class="text-2xl font-bold">Need More Help?</h2>
             <div class="mt-4">
                 <p>If you have any questions or issues, email us at <a href="mailto:support@join-humankind.com" class="themed-link">support@join-humankind.com</a></p>
             </div>
 
-            <p class="mt-12" style="font-family: var(--font-cursive); font-size: 1.5rem; color: var(--color-text);">With gratitude,</p>
-            <p class="mt-2 !-translate-y-2" style="color: var(--color-body-text);"><em>Grant & Luke<br>HumanKind Co-Founders</em></p>
+            <p class="mt-12 text-gray-600">We are thrilled to have you on this journey as one of the first voices shaping HumanKind!</p>
+            <p class="mt-6 text-gray-600">With gratitude,<br><em>Grant & Luke<br>HumanKind Co-Founders</em></p>
         </div>
     </div>
 
